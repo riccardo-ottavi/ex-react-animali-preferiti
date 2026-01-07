@@ -23,7 +23,11 @@
             }
 
             function addRandomAnimal(){
-                setAnimals([animalsChoices[pickRandomAnimal()]])
+                const newAnimal = animalsChoices[pickRandomAnimal()]
+                setAnimals([
+                    ...animals,
+                    animalsChoices[pickRandomAnimal()]
+                ])
             }
 
             return (
