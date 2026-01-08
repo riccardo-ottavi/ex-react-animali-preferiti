@@ -18,20 +18,33 @@
             title,
             content,
             show = false,
-            onClose = () => {},
-            onConfirm = () => {}
+            onClose = () => { },
+            onConfirm = () => { }
         }) {
+
+            const [currentAnimal, setCurrentAnimal] = useState("")
+
             return show && ReactDOM.createPortal(
                 <div className="modal-container">
-                    <div className="modal">
-                        <h2>{title}</h2>
-                        <p>{content}</p>
-                        
-                    </div>
-                    <div class="confirm">
-                        <button onClick={onConfirm}>Conferma</button>
-                        <button onClick={onClose}>Annulla</button>
-                    </div>
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        onConfirm(currentAnimal);
+                    }} >
+                        <div className="modal">
+                            <h2>{title}</h2>
+                            <input
+                                type="text"
+                                value={currentAnimal}
+                                onChange={e => setCurrentAnimal(e.target.value)}
+                            />
+                            <p>{content}</p>
+
+                        </div>
+                        <div className="confirm">
+                            <button type="submit">Conferma</button>
+                            <button onClick={onClose}>Annulla</button>
+                        </div>
+                    </form>
                 </div>,
                 document.body
             )
@@ -41,6 +54,7 @@
 
             const [animals, setAnimals] = useState([])
             const [show, setShow] = useState(true)
+
 
             const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
@@ -56,7 +70,7 @@
                 ])
             }
 
-            
+
 
             return (
                 <>
@@ -68,11 +82,12 @@
                             ))}
                         </ul>
                     </details>
-                    <Modal 
+                    <Modal
                         title="i miei animali preferiti"
-                        content={animal}
+                        content={"hai inserito: "}
                         show={show}
                         onClose={() => setShow(false)}
+                        onConfirm={() => setShow(false)}
                     />
                 </>
             )
