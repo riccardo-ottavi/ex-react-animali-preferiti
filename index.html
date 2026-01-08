@@ -28,7 +28,7 @@
                 <div className="modal-container">
                     <form onSubmit={(e) => {
                         e.preventDefault();
-                        onConfirm((animal) => handleInsert(animal));
+                        onConfirm(currentAnimal);
                     }} >
                         <div className="modal">
                             <h2>{title}</h2>
@@ -87,7 +87,7 @@
                         title="i miei animali preferiti"
                         show={show}
                         onClose={() => setShow(false)}
-                        onConfirm={() => handleInsert()}
+                        onConfirm={(animal) => handleInsert(animal)}
                     />
                 </>
             )
