@@ -28,7 +28,7 @@
                 <div className="modal-container">
                     <form onSubmit={(e) => {
                         e.preventDefault();
-                        onConfirm(currentAnimal);
+                        onConfirm((animal) => handleInsert(animal));
                     }} >
                         <div className="modal">
                             <h2>{title}</h2>
@@ -53,7 +53,7 @@
         const ReactApp = () => {
 
             const [animals, setAnimals] = useState([])
-            const [show, setShow] = useState(true)
+            const [show, setShow] = useState(false)
 
 
             const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
@@ -62,19 +62,20 @@
                 return Math.floor(Math.random() * 5);
             }
 
-            function addRandomAnimal() {
-                const newAnimal = animalsChoices[pickRandomAnimal()]
-                setAnimals([
-                    ...animals,
-                    animalsChoices[pickRandomAnimal()]
-                ])
+            function openModal() {
+                setShow(true)
+            }
+
+            function handleInsert(animal) {
+                setAnimals([...animals, animal]);
+                setShow(false);
             }
 
 
 
             return (
                 <>
-                    <button onClick={addRandomAnimal}>Aggiungi animale</button>
+                    <button onClick={openModal}>Aggiungi animale</button>
                     <details>
                         <ul>
                             {animals.map(a => (
@@ -84,10 +85,9 @@
                     </details>
                     <Modal
                         title="i miei animali preferiti"
-                        content={"hai inserito: "}
                         show={show}
                         onClose={() => setShow(false)}
-                        onConfirm={() => setShow(false)}
+                        onConfirm={() => handleInsert()}
                     />
                 </>
             )
