@@ -18,13 +18,18 @@
             title,
             content,
             show = false,
-            onClose = () => { }
+            onClose = () => {},
+            onConfirm = () => {}
         }) {
             return show && ReactDOM.createPortal(
                 <div className="modal-container">
                     <div className="modal">
                         <h2>{title}</h2>
                         <p>{content}</p>
+                        
+                    </div>
+                    <div class="confirm">
+                        <button onClick={onConfirm}>Conferma</button>
                         <button onClick={onClose}>Annulla</button>
                     </div>
                 </div>,
@@ -65,8 +70,9 @@
                     </details>
                     <Modal 
                         title="i miei animali preferiti"
-                        content="qua andrà la lista"
+                        content={animal}
                         show={show}
+                        onClose={() => setShow(false)}
                     />
                 </>
             )
