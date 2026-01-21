@@ -23,29 +23,16 @@
             onConfirm = () => { }
         }) {
 
-            const [currentAnimal, setCurrentAnimal] = useState("")
-
             return show && ReactDOM.createPortal(
                 <div className="modal-container">
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        onConfirm(currentAnimal);
-                    }} >
-                        <div className="modal">
-                            <h2>{title}</h2>
-                            <input
-                                type="text"
-                                value={currentAnimal}
-                                onChange={e => setCurrentAnimal(e.target.value)}
-                            />
-                            <p>{content}</p>
-
-                        </div>
-                        <div className="confirm">
-                            <button type="submit">Conferma</button>
-                            <button onClick={onClose}>Annulla</button>
-                        </div>
-                    </form>
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        {content}
+                    </div>
+                    <div className="confirm">
+                        <button onClick={onConfirm}>Conferma</button>
+                        <button onClick={onClose}>Annulla</button>
+                    </div>
                 </div>,
                 document.body
             )
@@ -55,7 +42,7 @@
 
             const [animals, setAnimals] = useState([])
             const [show, setShow] = useState(false)
-
+            const [currentAnimal, setCurrentAnimal] = useState("")
 
             const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
@@ -67,8 +54,9 @@
                 setShow(true)
             }
 
-            function handleInsert(animal) {
-                setAnimals([...animals, animal]);
+            function handleInsert() {
+                if (!currentAnimal) return
+                setAnimals([...animals, currentAnimal]);
                 setShow(false);
             }
 
@@ -80,14 +68,21 @@
                     <details>
                         <summary>Animali</summary>
                         <ul>
-                            {animals.map(a => (
-                                <li>{a}</li>
+                            {animals.map((animal, i) => (
+                                <li key={i}>{animal}</li>
                             ))}
                         </ul>
                     </details>
                     <Modal
                         title="i miei animali preferiti"
                         show={show}
+                        content={
+                            <input
+                                type="text"
+                                value={currentAnimal}
+                                onChange={e => setCurrentAnimal(e.target.value)}
+                            />
+                        }
                         onClose={() => setShow(false)}
                         onConfirm={(animal) => handleInsert(animal)}
                     />
