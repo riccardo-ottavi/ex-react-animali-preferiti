@@ -50,10 +50,6 @@
                 return Math.floor(Math.random() * 5);
             }
 
-            function openModal() {
-                setShow(true)
-            }
-
             function handleInsert() {
                 if (!currentAnimal) return
                 setAnimals([...animals, currentAnimal]);
@@ -64,7 +60,7 @@
 
             return (
                 <>
-                    <button onClick={openModal}>Aggiungi animale</button>
+                    <button onClick={() => setShow(true)}>Aggiungi animale</button>
                     <details>
                         <summary>Animali</summary>
                         <ul>
